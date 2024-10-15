@@ -1,1 +1,43 @@
+name: CI Pipeline
+
+# This will trigger the workflow on any pull request.
+on: 
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run ESLint (Linting)
+      - name: Run Linter (ESLint)
+        run: npm run lint
+
+      # Run Prettier (Formatting)
+      - name: Run Prettier (Formatter)
+        run: npm run prettier
+
+      # Run Jest tests
+      - name: Run Tests (Jest)
+        run: CI=true npm run test
+
+      # Build the project
+      - name: Build project
+        run: npm run build
 
